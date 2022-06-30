@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HeaderElement;
@@ -31,11 +32,9 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.HeaderGroup;
 import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+@Slf4j
 public class PrerenderSeoService {
-    private final static Logger log = LoggerFactory.getLogger(PrerenderSeoService.class);
     /**
      * These are the "hop-by-hop" headers that should not be copied.
      * <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html">...</a>

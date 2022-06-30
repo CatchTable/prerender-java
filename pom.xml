@@ -3,13 +3,13 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.github.philipjkim</groupId>
+  <groupId>com.github.greengerong</groupId>
   <artifactId>prerender-java</artifactId>
-  <version>1.0.1</version>
+  <version>2.0.0</version>
   <packaging>jar</packaging>
 
   <name>prerender-java</name>
-  <url>https://github.com/philipjkim/prerender-java</url>
+  <url>https://github.com/CatchTable/prerender-java</url>
 
   <licenses>
     <license>
@@ -20,9 +20,9 @@
 
   </licenses>
   <scm>
-    <connection>scm:git:git@github.com:philipjkim/prerender-java.git</connection>
-    <developerConnection>scm:git:git@github.com:philipjkim/prerender-java.git</developerConnection>
-    <url>git@github.com:philipjkim/prerender-java.git</url>
+    <connection>scm:git:git@github.com:CatchTable/prerender-java.git</connection>
+    <developerConnection>scm:git:git@github.com:CatchTable/prerender-java.git</developerConnection>
+    <url>git@github.com:CatchTable/prerender-java.git</url>
   </scm>
   <description/>
   <properties>
@@ -104,8 +104,8 @@
   <distributionManagement>
     <repository>
       <id>prerender-java</id>
-      <name>GitHub philipjkim Apache Maven Packages</name>
-      <url>https://maven.pkg.github.com/philipjkim/prerender-java</url>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/CatchTable/prerender-java</url>
     </repository>
   </distributionManagement>
 
