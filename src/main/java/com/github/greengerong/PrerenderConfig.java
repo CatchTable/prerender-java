@@ -1,7 +1,7 @@
 package com.github.greengerong;
 
 
-import com.google.common.collect.Lists;
+import java.util.stream.Stream;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
@@ -22,11 +22,77 @@ public class PrerenderConfig {
     public static final String PRERENDER_IO_SERVICE_URL = "https://service.prerender.io/";
     private final Map<String, String> config;
 
-    public PrerenderConfig(Map<String, String> config) {
-        this.config = config;
-    }
+    private List<String> crawlerUserAgents = List.of(
+        "baiduspider",
+        "facebookexternalhit",
+        "twitterbot",
+        "rogerbot",
+        "linkedinbot",
+        "embedly",
+        "quora link preview",
+        "showyoubot",
+        "outbrain",
+        "pinterest",
+        "developers.google.com/+/web/snippet",
+        "slackbot",
+        "vkShare",
+        "W3C_Validator",
+        "redditbot",
+        "Applebot",
+        "googlebot",
+        "yahoo! slurp",
+        "bingbot",
+        "yandex",
+        "whatsapp",
+        "flipboard",
+        "tumblr",
+        "bitlybot",
+        "skypeuripreview",
+        "nuzzel",
+        "discordbot",
+        "google page speed",
+        "qwantify",
+        "pinterestbot",
+        "bitrix link preview",
+        "xing-contenttabreceiver",
+        "chrome-lighthouse",
+        "telegrambot",
+        "Yeti",
+        "kakaotalk-scrap",
+        "Daum"
+    );
+    private List<String> extensionsToIgnore = List.of(
+        ".js", ".json", ".css", ".xml", ".less", ".png", ".jpg",
+        ".jpeg", ".gif", ".pdf", ".doc", ".txt", ".ico", ".rss",
+        ".zip", ".mp3", ".rar", ".exe", ".wmv", ".doc", ".avi",
+        ".ppt", ".mpg", ".mpeg", ".tif", ".wav", ".mov", ".psd",
+        ".ai", ".xls", ".mp4", ".m4a", ".swf", ".dat", ".dmg",
+        ".iso", ".flv", ".m4v", ".torrent", ".woff", ".ttf"
+    );
 
-    public PreRenderEventHandler getEventHandler() {
+  public PrerenderConfig(Map<String, String> config) {
+        this.config = config;
+
+        // Initialize crawlerUserAgents
+        var customUAsStr = config.get("crawlerUserAgents");
+        if (isNotBlank(customUAsStr)) {
+          crawlerUserAgents = Stream.concat(
+              crawlerUserAgents.stream(),
+              Arrays.stream(customUAsStr.trim().split(",")).map(String::trim)
+          ).toList();
+        }
+
+        // Initialize extensionsToIgnore
+        var extToIgnoreStr = config.get("extensionsToIgnore");
+        if (isNotBlank(extToIgnoreStr)) {
+          extensionsToIgnore = Stream.concat(
+              extensionsToIgnore.stream(),
+              Arrays.stream(extToIgnoreStr.trim().split(",")).map(String::trim)
+          ).toList();
+        }
+  }
+
+  public PreRenderEventHandler getEventHandler() {
         final String preRenderEventHandler = config.get("preRenderEventHandler");
         if (isNotBlank(preRenderEventHandler)) {
             try {
@@ -83,28 +149,10 @@ public class PrerenderConfig {
     }
 
     public List<String> getCrawlerUserAgents() {
-        List<String> crawlerUserAgents = Lists.newArrayList("baiduspider",
-                "facebookexternalhit", "twitterbot", "rogerbot", "linkedinbot", "embedly", "quora link preview"
-                , "showyoubo", "outbrain", "pinterest", "developers.google.com/+/web/snippet", "slackbot", "vkShare",
-                "W3C_Validator", "redditbot", "Applebot");
-        final String crawlerUserAgentsFromConfig = config.get("crawlerUserAgents");
-        if (isNotBlank(crawlerUserAgentsFromConfig)) {
-            crawlerUserAgents.addAll(Arrays.asList(crawlerUserAgentsFromConfig.trim().split(",")));
-        }
-
         return crawlerUserAgents;
     }
 
     public List<String> getExtensionsToIgnore() {
-        List<String> extensionsToIgnore = Lists.newArrayList(".js", ".json", ".css", ".xml", ".less", ".png", ".jpg",
-                ".jpeg", ".gif", ".pdf", ".doc", ".txt", ".ico", ".rss", ".zip", ".mp3", ".rar", ".exe", ".wmv",
-                ".doc", ".avi", ".ppt", ".mpg", ".mpeg", ".tif", ".wav", ".mov", ".psd", ".ai", ".xls", ".mp4",
-                ".m4a", ".swf", ".dat", ".dmg", ".iso", ".flv", ".m4v", ".torrent", ".woff", ".ttf");
-        final String extensionsToIgnoreFromConfig = config.get("extensionsToIgnore");
-        if (isNotBlank(extensionsToIgnoreFromConfig)) {
-            extensionsToIgnore.addAll(Arrays.asList(extensionsToIgnoreFromConfig.trim().split(",")));
-        }
-
         return extensionsToIgnore;
     }
 
