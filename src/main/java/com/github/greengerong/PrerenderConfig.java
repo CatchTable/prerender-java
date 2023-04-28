@@ -59,7 +59,7 @@ public class PrerenderConfig {
       "telegrambot",
       "Yeti",
       "kakaotalk-scrap",
-      "Daum"
+      "Daumoa"
   );
   private List<String> extensionsToIgnore = List.of(
       ".js", ".json", ".css", ".xml", ".less", ".png", ".jpg",
